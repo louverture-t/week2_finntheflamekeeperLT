@@ -1,0 +1,648 @@
+/* ===============================
+   🌈 GLOBAL STYLES + VARIABLES
+   =============================== */
+:root {
+  --dark: #000000;
+  --light: #ffffff;
+  --primary: #404040;
+  --accent: #ffcc02;
+  --muted: #f5f5f5;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --shadow: rgba(255, 204, 2, 0.2);
+  --glow: 0 0 15px rgba(255, 204, 2, 0.7);
+  --spacing: clamp(1rem, 2vw, 1.5rem);
+  --spacing-large: clamp(2rem, 4vw, 4rem);
+  --radius: 8px;
+  --font-main: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-fantasy: 'Orbitron', monospace;
+  --font-body: 'Exo 2', sans-serif;
+  
+  /* Unified container system */
+  --container-max: 1120px;
+  --container-pad: clamp(1rem, 3vw, 2rem);
+  
+  /* Responsive gap system */
+  --gap-small: clamp(0.5rem, 1vw, 1rem);
+  --gap-medium: clamp(1rem, 2vw, 1.5rem);
+  --gap-large: clamp(1.5rem, 3vw, 2rem);
+  --gap-xlarge: clamp(2rem, 4vw, 8rem);
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body), var(--font-main);
+  line-height: 1.6;
+  background-color: var(--primary);
+  color: var(--text-primary);
+  padding-bottom: var(--spacing-large);
+  scroll-behavior: smooth;
+}
+
+/* ===============================
+   🎨 REUSABLE COMPONENTS
+   =============================== */
+
+/* Container component */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* Section gradient background */
+.section-gradient {
+  background: linear-gradient(135deg, #383838 0%, #2a2a2a 100%);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 204, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer animation */
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.05), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Button component */
+.button {
+  background: linear-gradient(135deg, var(--accent) 0%, #e6b800 100%);
+  color: var(--dark);
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #e6b800 0%, var(--accent) 100%);
+  transform: translateY(-3px);
+  box-shadow: var(--glow);
+}
+
+.button:active {
+  transform: translateY(-1px);
+}
+
+/* ===============================
+   🎮 HEADER & NAVIGATION
+   =============================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem var(--container-pad);
+  background-color: var(--dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+header.container {
+  padding: 1rem var(--container-pad);
+}
+
+.logo {
+  font-family: var(--font-fantasy);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--dark);
+  background-color: var(--accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
+
+nav {
+  display: flex;
+  gap: var(--gap-large);
+}
+
+nav a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+nav a:hover {
+  color: var(--accent);
+  background-color: rgba(255, 204, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav a:hover::after {
+  width: 80%;
+}
+
+/* ===============================
+   🧭 VERTICAL SIDE NAVIGATION
+   =============================== */
+.main-content-with-nav {
+  display: flex;
+  align-items: flex-start;
+}
+
+.side-nav {
+  min-width: 180px;
+  margin-right: 2rem;
+  position: sticky;
+  top: 100px;
+}
+
+.side-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-nav li {
+  margin-bottom: 2rem;
+}
+
+.side-nav a {
+  display: block;
+  font-weight: bold;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.side-nav a:hover {
+  background: var(--muted);
+  color: var(--dark);
+}
+
+.main-sections {
+  flex: 1;
+}
+
+/* ===============================
+   📄 SECTION STYLES
+   =============================== */
+section {
+  padding: var(--spacing-large) 0;
+}
+
+/* Ensure consistent container alignment for all sections */
+section.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section h2 {
+  font-family: var(--font-fantasy);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--text-primary);
+  margin-bottom: var(--gap-large);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 1rem auto;
+}
+
+/* ===============================
+   🐉 LEGEND SECTION
+   =============================== */
+#legend {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xlarge);
+  min-height: 60vh;
+}
+
+.legend-image {
+  flex: 0 0 350px;
+  text-align: center;
+}
+
+.legend-image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.legend-image img:hover {
+  transform: scale(1.02);
+}
+
+.legend-image h3 {
+  margin-top: var(--spacing);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  font-family: var(--font-fantasy);
+  text-shadow: var(--glow);
+}
+
+.legend-image p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.legend-text {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.legend-text p {
+  margin-bottom: var(--spacing);
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.legend-text p:first-child::first-letter {
+  font-size: 3em;
+  float: left;
+  line-height: 1;
+  margin: 0.1em 0.1em 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-fantasy);
+  text-shadow: var(--glow);
+}
+
+/* ===============================
+   🔮 RUNES SECTION
+   =============================== */
+#runes {
+  text-align: left;
+}
+
+#runes h2 {
+  text-align: center;
+}
+
+.runes-gallery {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gap-medium);
+  flex-wrap: wrap;
+  margin-top: var(--gap-large);
+  position: relative;
+  z-index: 1;
+}
+
+.rune-medallion {
+  width: 320px;
+  height: 160px;
+  border-radius: var(--radius);
+  border: 3px solid var(--accent);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.rune-medallion:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: var(--glow);
+  border-width: 5px;
+}
+
+.rune-medallion::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 204, 0, 0.2) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rune-medallion:hover::after {
+  opacity: 1;
+}
+
+/* Medallion Background Images */
+.rune-medallion:nth-child(1) { background-image: url('../images/rune1.jpg'); }
+.rune-medallion:nth-child(2) { background-image: url('../images/rune2.jpg'); }
+.rune-medallion:nth-child(3) { background-image: url('../images/rune3.jpg'); }
+.rune-medallion:nth-child(4) { background-image: url('../images/rune4.jpg'); }
+.rune-medallion:nth-child(5) { background-image: url('../images/rune5.jpg'); }
+
+/* ===============================
+   📜 DIRECTIONS SECTION
+   =============================== */
+#directions {
+  text-align: left;
+}
+
+#directions h2 {
+  text-align: center;
+}
+
+#directions::before {
+  background: linear-gradient(45deg, transparent 49%, rgba(255, 204, 0, 0.03) 50%, transparent 51%);
+  pointer-events: none;
+}
+
+.directions-content {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.directions-content p {
+  margin-bottom: var(--spacing);
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--accent);
+}
+
+/* ===============================
+   🐦 SEND A RAVEN SECTION
+   =============================== */
+#send-raven {
+  text-align: left;
+}
+
+#send-raven h2 {
+  text-align: center;
+}
+
+#send-raven::before {
+  animation: shimmer 4s infinite;
+}
+
+.raven-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-large);
+  margin-bottom: var(--gap-large);
+  position: relative;
+  z-index: 1;
+}
+
+.raven-title {
+  font-size: 2rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: var(--font-fantasy);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.raven-subtitle {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.raven-divider {
+  width: 4px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  border-radius: px;
+  box-shadow: var(--glow);
+}
+
+.raven-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gap-medium);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===============================
+   📱 RESPONSIVE DESIGN
+   =============================== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: var(--gap-medium);
+    padding: 1rem;
+  }
+
+  nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--gap-small);
+    justify-content: center;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  section {
+    padding: var(--gap-large) var(--container-pad);
+  }
+
+  /* Legend Section - Stack vertically */
+  #legend {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--gap-large);
+  }
+
+  .legend-image {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .legend-text {
+    font-size: 1rem;
+    padding-left: 0;
+  }
+
+  .legend-text p:first-child::first-letter {
+    font-size: 2em;
+  }
+
+  /* Runes - 2-2-1 layout */
+  .runes-gallery {
+    max-width: 720px;
+    margin: 0;
+    gap: var(--gap-small);
+    justify-content: center;
+  }
+
+  .rune-medallion {
+    width: calc(50% - var(--gap-small));
+    height: 160px;
+  }
+
+  .rune-medallion:nth-child(5) {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Raven section responsive */
+  .raven-header {
+    flex-direction: column;
+    gap: var(--gap-medium);
+    justify-content: center;
+  }
+
+  .raven-divider {
+    width: 60px;
+    height: 4px;
+  }
+
+  .raven-buttons {
+    gap: var(--gap-small);
+    justify-content: center;
+  }
+
+  .button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .directions-content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rune-medallion {
+    width: min(280px, calc(100vw - 2rem));
+    height: 140px;
+  }
+
+  .rune-medallion:nth-child(5) {
+    width: min(280px, calc(100vw - 2rem));
+  }
+
+  .raven-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button {
+    width: 200px;
+  }
+
+  section h2 {
+    font-size: 1.5rem;
+  }
+
+  .legend-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===============================
+   🌟 ACCESSIBILITY ENHANCEMENTS
+   =============================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+a:focus, button:focus, .button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow: rgba(0, 0, 0, 0.5);
+    --text-secondary: #ffffff;
+  }
+}
